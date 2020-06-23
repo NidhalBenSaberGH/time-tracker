@@ -1,15 +1,22 @@
-node {
-   def mvn = tool (name: 'Maven', type: 'maven') + '/bin/mvn'
-   stage('SCM Checkout'){
+pipeline {
+    agent {
+        docker {
+            image 'maven:3-alpine'
+            args '-v $HOME/.m2:/root/.m2'
+        }
+    }
+    
+    stage('SCM Checkout'){
     // Clone Git repo
-	git branch: 'master', 
-	credentialsId: 'github', 
+	git branch: 'master',
 	url: 'https://github.com/NidhalBenSaberGH/time-tracker'
-   
-   }
-   
-   stage('Mvn Package'){
-	   // Build using maven
-	   bat "${mvn} clean package"
-   }
+   }	
+	
+    stages {
+        stage('Build') {
+            steps {
+                 bat 'clean package'
+            }
+        }
+    }
 }
