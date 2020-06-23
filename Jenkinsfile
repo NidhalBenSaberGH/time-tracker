@@ -18,7 +18,7 @@ pipeline {
 	    
         stage('Build') {
             steps {
-                 bat 'clean package'
+                 sh 'clean package'
             }
         }
     }
