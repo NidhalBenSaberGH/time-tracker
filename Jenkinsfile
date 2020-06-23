@@ -5,14 +5,17 @@ pipeline {
             args '-v $HOME/.m2:/root/.m2'
         }
     }
-    
-    stage('SCM Checkout'){
-    // Clone Git repo
-	git branch: 'master',
-	url: 'https://github.com/NidhalBenSaberGH/time-tracker'
-   }	
-	
+    	
     stages {
+	stage('SCM Checkout'){
+	    steps{
+	        // Clone Git repo
+	        git branch: 'master',
+	        url: 'https://github.com/NidhalBenSaberGH/time-tracker'
+	    }
+	    
+        }
+	    
         stage('Build') {
             steps {
                  bat 'clean package'
